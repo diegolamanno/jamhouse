@@ -15,6 +15,12 @@ const readAll = () => {
   })
 }
 
+const lighthouse = () => {
+  return fetch('/.netlify/functions/lighthouse').then((response) => {
+    return response.json()
+  })
+}
+
 const update = (todoId, data) => {
   return fetch(`/.netlify/functions/todos-update/${todoId}`, {
     body: JSON.stringify(data),
@@ -49,4 +55,5 @@ export default {
   update: update,
   delete: deleteTodo,
   batchDelete: batchDeleteTodo
+  lighthouse: lighthouse,
 }
