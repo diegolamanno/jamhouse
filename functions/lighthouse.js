@@ -1,3 +1,4 @@
+// Trigger deploy
 const createLighthouse = require("lighthouse-lambda");
 
 exports.handler = function(event, context, callback) {
