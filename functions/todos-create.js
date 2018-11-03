@@ -6,8 +6,6 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SERVER_SECRET
 });
 
-console.log(process.env.FAUNADB_SERVER_SECRET);
-
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
   /* parse the string body into a useable JS object */
@@ -16,6 +14,7 @@ exports.handler = (event, context, callback) => {
   const todoItem = {
     data: data
   };
+  console.log(process.env.FAUNADB_SERVER_SECRET);
   /* construct the fauna query */
   return client
     .query(q.Create(q.Ref("classes/todos"), todoItem))
