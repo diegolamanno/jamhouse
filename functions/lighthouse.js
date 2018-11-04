@@ -1,21 +1,24 @@
-// Trigger deploy
-const createLighthouse = require("lighthouse-lambda");
+// import createLighthouse from "lighthouse-lambda";
+const launchChrome = require("@serverless-chrome/lambda");
+const lighthouse = require("lighthouse");
+/* export our lambda function as named "handler" export */
+exports.handler = async (event, context, callback) => {
+  const chrome = await launchChrome({
+    flags: ["--window-size=1280,1696", "--hide-scrollbars"]
+  });
 
-exports.handler = function(event, context, callback) {
-  Promise.resolve()
-    .then(() => createLighthouse("https://example.com", { logLevel: "info" }))
-    .then(({ chrome, start }) => {
-      return start()
-        .then(results => {
-          // Do something with `results`
-          console.log(results);
-          return chrome.kill().then(() => callback(null));
-        })
-        .catch(error => {
-          // Handle errors when running Lighthouse
-          return chrome.kill().then(() => callback(error));
-        });
-    })
-    // Handle other errors
-    .catch(callback);
+  const opts = {
+    chromeFlags: ["--show-paint-rects"],
+    port: chrome.port
+  };
+
+  const lighthouseResp = await lighthouse("https://github.com", opts, null);
+
+  await chrome.kill();
+  return {
+    statusCode: 200,
+    body: JSON.stringify(lighthouseResp.lhr)
+  };
+  // Chrome didn't launch correctly 😢
+  // console.log("no").catch(callback);
 };
