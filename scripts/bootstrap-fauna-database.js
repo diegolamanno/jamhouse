@@ -46,10 +46,12 @@ function createFaunaDB(key) {
 
   /* Based on your requirements, change the schema here */
   return client
-    .query(q.CreateClass({
-      name: "sites"
-    }))
-    .then((ret) => console.log(ret))
+    .query(
+      q.CreateClass({
+        name: "sites"
+      })
+    )
+    .then(ret => console.log(ret))
     .catch(e => {
       // Database already exists
       if (
@@ -63,17 +65,21 @@ function createFaunaDB(key) {
 }
 
 function createIndex(client, rev) {
-  console.log(`creating index. reverse_order:${rev}`)
+  console.log(`creating index. reverse_order:${rev}`);
   if (!rev) {
-    return client.query(
+    return client
+      .query(
         q.CreateIndex({
           name: "UNIQUE_ENTRY_CONSTRAINT",
           // @ts-ignore
           source: Class("sites"),
-          terms: [{
-            field: ["data", "clientID"]
-          }],
-          values: [{
+          terms: [
+            {
+              field: ["data", "clientID"]
+            }
+          ],
+          values: [
+            {
               field: ["data", "timestamp"]
             },
             {
@@ -92,21 +98,23 @@ function createIndex(client, rev) {
           unique: true
         })
       )
-      .then((ret) => console.log(`Created index with rev: ${rev}`, ret))
-  }
-  else if (rev)
-  {
-    return client.query(
+      .then(ret => console.log(`Created index with rev: ${rev}`, ret));
+  } else if (rev) {
+    return client
+      .query(
         q.CreateIndex({
           name: "site_client_id",
           // @ts-ignore
           source: Class("sites"),
-          terms: [{
-            field: ["data", "clientID"]
-          }],
-          values: [{
-            field: ["data", "timestamp"],
-            reverse: true
+          terms: [
+            {
+              field: ["data", "clientID"]
+            }
+          ],
+          values: [
+            {
+              field: ["data", "timestamp"],
+              reverse: true
             },
             {
               field: ["data", "performance"]
@@ -121,15 +129,14 @@ function createIndex(client, rev) {
               field: ["data", "performance3"]
             },
             {
-              field:["ref"]
+              field: ["ref"]
             }
-
           ],
           unique: false,
           serialized: true
         })
       )
-      .then((ret) => console.log(`created index with rev: ${ rev} `, ret))
+      .then(ret => console.log(`created index with rev: ${rev} `, ret));
   }
 }
 
@@ -149,7 +156,7 @@ function ask(question, callback) {
     input: process.stdin,
     output: process.stdout
   });
-  rl.question(question + "\n", function (answer) {
+  rl.question(question + "\n", function(answer) {
     rl.close();
     callback(null, answer);
   });
