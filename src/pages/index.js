@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ContentEditable from '../components/ContentEditable'
 import AppHeader from '../components/AppHeader'
+import Loader from '../components/Loader'
 import SettingsMenu from '../components/SettingsMenu'
 import SettingsIcon from '../components/SettingsIcon'
 import api from '../utils/api'
@@ -11,8 +12,11 @@ import './index.css'
 
 export default class Index extends Component {
 	state = {
+		error: undefined,
+		isLoading: false,
 		todos: [],
 		showMenu: false,
+		lighthouseResults: [],
 	}
 
 	componentDidMount() {
@@ -32,6 +36,7 @@ export default class Index extends Component {
 			}
 
 			console.log('all todos', todos)
+
 			this.setState({
 				todos,
 			})
@@ -264,6 +269,75 @@ export default class Index extends Component {
 		})
 	}
 
+	getStreamedData = async response => {
+		const reader = response.body.getReader()
+		const decoder = new TextDecoder()
+
+		let partialCell = ''
+
+		return reader.read().then(({ done, value }) => {
+			partialCell += decoder.decode(value || new Uint8Array(), {
+				stream: !done,
+			})
+
+			const parsedData = JSON.parse(partialCell)
+
+			return parsedData
+		})
+	}
+
+	getLighthouseReport = async url => {
+		try {
+			this.setState({
+				isLoading: true,
+				error: undefined,
+			})
+
+			const res = await fetch(
+				'https://ey918zoh98.execute-api.us-east-1.amazonaws.com/dev/lighthouse',
+				{
+					method: 'POST',
+					body: JSON.stringify({
+						website: url,
+					}),
+					headers: new Headers({
+						'Content-Type': 'application/json',
+					}),
+				}
+			)
+
+			const data = await this.getStreamedData(res)
+
+			this.setState({
+				isLoading: false,
+				lighthouseResults: data,
+			})
+		} catch (err) {
+			console.log(err)
+			this.setState({
+				isLoading: false,
+				error: 'Error fetching data. Please try again.',
+			})
+		}
+
+		return false
+	}
+
+	showLighthouseResults = results => {
+		const resultDivs = results.map(result => (
+			<div style={{ margin: '0 20px' }} className="result" key={result.title}>
+				<div>
+					<strong>{result.title}</strong>
+				</div>
+				<div>{`${result.score * 100}%`}</div>
+			</div>
+		))
+
+		return (
+			<div style={{ display: 'flex', alignItems: 'center', marginTop: '40px' }}>{resultDivs}</div>
+		)
+	}
+
 	renderTodos() {
 		const { todos } = this.state
 
@@ -321,40 +395,28 @@ export default class Index extends Component {
 	}
 
 	render() {
+		const { error, isLoading, lighthouseResults } = this.state
+
 		return (
-			<div className="app">
-				<AppHeader />
-
-				<div className="todo-list">
-					<h2>
-						Create todo
-						<SettingsIcon onClick={this.openModal} className="mobile-toggle" />
-					</h2>
-					<form className="todo-create-wrapper" onSubmit={this.saveTodo}>
-						<input
-							className="todo-create-input"
-							placeholder="Add a todo item"
-							name="name"
-							ref={el => (this.inputElement = el)}
-							autoComplete="off"
-							style={{ marginRight: 20 }}
-						/>
-						<div className="todo-actions">
-							<button className="todo-create-button">Create todo</button>
-							<SettingsIcon onClick={this.openModal} className="desktop-toggle" />
-						</div>
-					</form>
-
-					{this.renderTodos()}
-				</div>
-				<SettingsMenu
-					showMenu={this.state.showMenu}
-					handleModalClose={this.closeModal}
-					handleClearCompleted={this.clearCompleted}
-				/>
-				<button className="todo-create-button" onClick={api.lighthouse}>
-					lighthouse
+			<div
+				style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}
+				className="app"
+			>
+				<button
+					style={{ marginTop: '40px' }}
+					className="todo-create-button"
+					type="submit"
+					onClick={() => this.getLighthouseReport('https://www.github.com')}
+				>
+					Get lighthouse results
 				</button>
+				{isLoading && (
+					<span>
+						<Loader />
+					</span>
+				)}
+				{lighthouseResults.length > 0 && this.showLighthouseResults(lighthouseResults)}
+				{error && <div style={{ margin: '40px' }}>{error}</div>}
 			</div>
 		)
 	}
