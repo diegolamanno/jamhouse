@@ -289,6 +289,7 @@ export default class Index extends Component {
 	getLighthouseReport = async url => {
 		try {
 			this.setState({
+				lighthouseResults: [],
 				isLoading: true,
 				error: undefined,
 			})
