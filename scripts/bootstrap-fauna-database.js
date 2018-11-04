@@ -6,12 +6,14 @@ const insideNetlify = insideNetlifyBuildContext()
 const q = faunadb.query
 
 if (!process.env.FAUNADB_SERVER_SECRET) {
-	console.log('No FAUNADB_SERVER_SECRET found')
-	console.log('Please run `netlify addons:create fauna-staging` and redeploy')
-	return false
+  console.log("No FAUNADB_SERVER_SECRET found");
+  console.log("Please run `netlify addons:create fauna-staging` and redeploy");
+  // @ts-ignore
+  return false;
 }
 
-console.log(chalk.cyan('Creating your FaunaDB Database...\n'))
+// @ts-ignore
+console.log(chalk.cyan("Creating your FaunaDB Database...\n"));
 if (insideNetlify) {
 	// Run idempotent database creation
 
@@ -20,29 +22,34 @@ if (insideNetlify) {
 		console.log('Database created')
 	})
 } else {
-	console.log()
-	console.log('You can create fauna DB keys here: https://dashboard.fauna.com/db/keys')
-	console.log()
-	ask(chalk.bold('Enter your faunaDB server key'), (err, answer) => {
-		if (err) {
-			console.log(err)
-		}
-		if (!answer) {
-			console.log('Please supply a faunaDB server key')
-			process.exit(1)
-		}
-		createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then(() => {
-			console.log('Database created')
-		})
-	})
+  console.log();
+  console.log("You can create fauna DB keys here: https://dashboard.fauna.com/db/keys");
+  console.log();
+  // @ts-ignore
+  ask(chalk.bold("Enter your faunaDB server key"), (err, answer) => {
+    if (err) {
+      console.log(err);
+    }
+    if (!answer) {
+      console.log("Please supply a faunaDB server key");
+      process.exit(1);
+    }
+    createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then((client) =>
+    {
+      createIndex(client, false)
+      createIndex(client, true)
+      console.log("Database index created");
+    });
+  });
 }
 
 /* idempotent operation */
 function createFaunaDB(key) {
-	console.log('Create the database!')
-	const client = new faunadb.Client({
-		secret: key,
-	})
+  console.log("Create the database!");
+  // @ts-ignore
+  const client = new faunadb.Client({
+    secret: key
+  });
 
 	/* Based on your requirements, change the schema here */
 	return client
@@ -62,79 +69,81 @@ function createFaunaDB(key) {
 }
 
 function createIndex(client, rev) {
-	console.log(`creating index. reverse_order:${rev}`)
-	if (!rev) {
-		return client
-			.query(
-				q.CreateIndex({
-					name: 'UNIQUE_ENTRY_CONSTRAINT',
-					// @ts-ignore
-					source: Class('sites'),
-					terms: [
-						{
-							field: ['data', 'clientID'],
-						},
-					],
-					values: [
-						{
-							field: ['data', 'timestamp'],
-						},
-						{
-							field: ['data', 'performance'],
-						},
-						{
-							field: ['data', 'performance1'],
-						},
-						{
-							field: ['data', 'performance2'],
-						},
-						{
-							field: ['data', 'performance3'],
-						},
-					],
-					unique: true,
-				})
-			)
-			.then(ret => console.log(`Created index with rev: ${rev}`, ret))
-	} else if (rev) {
-		return client
-			.query(
-				q.CreateIndex({
-					name: 'site_client_id',
-					// @ts-ignore
-					source: Class('sites'),
-					terms: [
-						{
-							field: ['data', 'clientID'],
-						},
-					],
-					values: [
-						{
-							field: ['data', 'timestamp'],
-							reverse: true,
-						},
-						{
-							field: ['data', 'performance'],
-						},
-						{
-							field: ['data', 'performance1'],
-						},
-						{
-							field: ['data', 'performance2'],
-						},
-						{
-							field: ['data', 'performance3'],
-						},
-						{
-							field: ['ref'],
-						},
-					],
-					unique: false,
-					serialized: true,
-				})
-			)
-			.then(ret => console.log(`created index with rev: ${rev} `, ret))
-	}
+  console.log(`creating index. reverse_order:${rev}`)
+  if (!rev) {
+    return client.query(
+        q.CreateIndex({
+          name: "UNIQUE_ENTRY_CONSTRAINT",
+          // @ts-ignore
+          source: Class("sites"),
+          terms: [{
+            field: ["data", "clientID"]
+          }],
+          values: [{
+              field: ["data", "clientTS"]
+            },
+            {
+              field: ["data", "Performance"]
+            },
+            {
+              field: ["data", "Progressive Web App"]
+            },
+            {
+              field: ["data", "Accessibility"]
+            },
+            {
+              field: ["data", "Best Practices"]
+            },
+            {
+              field: ["data", "SEO"]
+            }
+          ],
+          unique: true
+        })
+      )
+      .then((ret) => console.log(`Created index with rev: ${rev}`, ret))
+  }
+  else if (rev)
+  {
+    return client.query(
+        q.CreateIndex({
+          name: "site_client_id",
+          // @ts-ignore
+          source: Class("sites"),
+          terms: [{
+            field: ["data", "clientID"]
+          }],
+        values:
+          [
+            {
+              field: ["data", "clientTS"],
+              reverse: true
+            },
+            {
+              field: ["data", "Performance"]
+            },
+            {
+              field: ["data", "Progressive Web App"]
+            },
+            {
+              field: ["data", "Accessibility"]
+            },
+            {
+              field: ["data", "Best Practices"]
+            },
+            {
+              field: ["data", "SEO"]
+            },
+            {
+              field:["ref"]
+            }
+          ],
+          unique: false,
+          serialized: true
+        })
+      )
+      .then((ret) => console.log(`created index with rev: ${ rev} `, ret))
+  }
 }
 
 /* util methods */
