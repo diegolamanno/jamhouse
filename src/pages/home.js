@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './home.css'
-import Header from '../components/AppHeader'
 import AppHeader from '../components/AppHeader'
 import AppHome from '../components/AppHome'
 import AppFooter from '../components/AppFooter'

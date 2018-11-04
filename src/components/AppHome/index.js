@@ -1,4 +1,5 @@
 import React from 'react'
+import LighthouseForm from '../LighthouseForm/LighthouseForm'
 
 const AppHome = () => (
 	<main id="front-page">
@@ -18,6 +19,7 @@ const AppHome = () => (
 			<h2>How do I get started?</h2>
 			<div id="getting-started-grid">
 				<div id="check-site" className="shadow">
+					<LighthouseForm />
 					<h3>Check your site right now...</h3>
 					<p className="field">
 						<label htmlFor="name">Name:</label> <input id="name" />
