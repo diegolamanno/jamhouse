@@ -11,13 +11,13 @@ exports.handler = (event, context, callback) => {
   /* parse the string body into a useable JS object */
   const data = JSON.parse(event.body);
   console.log("HELLOOO. Function `todo-site` invoked", data);
-  const todoItem = {
+  const siteItem = {
     data: data
   };
 
   /* construct the fauna query */
   return client
-    .query(q.Create(q.Ref("classes/sites"), todoItem))
+    .query(q.Create(q.Ref("classes/sites"), siteItem))
     .then(response => {
       console.log("success", response);
       /* Success! return the response with statusCode 200 */

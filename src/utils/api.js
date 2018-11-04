@@ -1,13 +1,13 @@
 /* Api methods to call /functions */
 
-const create = data => {
-	return fetch('/.netlify/functions/todos-create', {
-		body: JSON.stringify(data),
-		method: 'POST',
-	}).then(response => {
-		return response.json()
-	})
-}
+// const create = data => {
+// 	return fetch('/.netlify/functions/todos-create', {
+// 		body: JSON.stringify(data),
+// 		method: 'POST',
+// 	}).then(response => {
+// 		return response.json()
+// 	})
+// }
 
 const createSite = data => {
 	return fetch('/.netlify/functions/site-create', {
@@ -19,13 +19,13 @@ const createSite = data => {
 }
 
 const readAll = () => {
-	return fetch('/.netlify/functions/todos-read-all').then(response => {
+	return fetch('/.netlify/functions/sites-read-all').then(response => {
 		return response.json()
 	})
 }
 
-const update = (todoId, data) => {
-	return fetch(`/.netlify/functions/todos-update/${todoId}`, {
+const update = (siteId, data) => {
+	return fetch(`/.netlify/functions/sites-update/${siteId}`, {
 		body: JSON.stringify(data),
 		method: 'POST',
 	}).then(response => {
@@ -33,18 +33,18 @@ const update = (todoId, data) => {
 	})
 }
 
-const deleteTodo = todoId => {
-	return fetch(`/.netlify/functions/todos-delete/${todoId}`, {
+const deleteTodo = siteId => {
+	return fetch(`/.netlify/functions/sites-delete/${siteId}`, {
 		method: 'POST',
 	}).then(response => {
 		return response.json()
 	})
 }
 
-const batchDeleteTodo = todoIds => {
-	return fetch(`/.netlify/functions/todos-delete-batch`, {
+const batchDeleteTodo = siteIds => {
+	return fetch(`/.netlify/functions/sites-delete-batch`, {
 		body: JSON.stringify({
-			ids: todoIds,
+			ids: siteIds,
 		}),
 		method: 'POST',
 	}).then(response => {
