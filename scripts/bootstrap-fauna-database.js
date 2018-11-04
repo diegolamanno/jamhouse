@@ -11,6 +11,8 @@ if (!process.env.FAUNADB_SERVER_SECRET) {
 	return false
 }
 
+// Test
+
 console.log(chalk.cyan('Creating your FaunaDB Database...\n'))
 if (insideNetlify) {
 	// Run idempotent database creation
