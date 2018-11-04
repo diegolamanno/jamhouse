@@ -420,7 +420,7 @@ export default class Index extends Component {
 				<AppHeader />
 				<div className="todo-list">
 					<h2>
-						Create todo
+						Check your score
 						<SettingsIcon onClick={this.openModal} className="mobile-toggle" />
 					</h2>
 					<form className="todo-create-wrapper" onSubmit={this.handleLightHouse}>
