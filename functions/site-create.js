@@ -2,21 +2,22 @@ import faunadb from "faunadb"; /* Import faunaDB sdk */
 
 /* configure faunaDB Client with our secret */
 const q = faunadb.query;
-const client = new faunadb.Client({ secret: process.env.FAUNADB_SERVER_SECRET });
+const client = new faunadb.Client({
+  secret: process.env.FAUNADB_SERVER_SECRET
+});
 
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
   /* parse the string body into a useable JS object */
   const data = JSON.parse(event.body);
-  console.log("Hello webinar. Function `todo-create` invoked", data);
+  console.log("HELLOOO. Function `todo-site` invoked", data);
   const todoItem = {
     data: data
   };
-  console.log(process.env.FAUNADB_SERVER_SECRET);
 
   /* construct the fauna query */
   return client
-    .query(q.Create(q.Ref("classes/todos"), todoItem))
+    .query(q.Create(q.Ref("classes/sites"), todoItem))
     .then(response => {
       console.log("success", response);
       /* Success! return the response with statusCode 200 */
@@ -33,5 +34,4 @@ exports.handler = (event, context, callback) => {
         body: JSON.stringify(error)
       });
     }); // END Return
-
 }; // END Handler

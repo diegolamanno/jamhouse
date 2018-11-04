@@ -35,6 +35,21 @@ export default class App extends Component {
       });
     });
   }
+
+  siteCreate = e => {
+    e.preventDefault();
+    api
+      .createSite({
+        title: "github",
+        completed: false
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(e => {
+        console.log("An API error occurred", e);
+      });
+  };
   saveTodo = e => {
     e.preventDefault();
     const { todos } = this.state;
@@ -347,6 +362,9 @@ export default class App extends Component {
           </form>
 
           {this.renderTodos()}
+          <button className="todo-create-button" onClick={this.siteCreate}>
+            Create site
+          </button>
         </div>
         <SettingsMenu
           showMenu={this.state.showMenu}

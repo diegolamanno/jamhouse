@@ -1,25 +1,56 @@
 /* Api methods to call /functions */
 
-const create = data =>
-	fetch('/.netlify/functions/todos-create', {
-		body: JSON.stringify(data),
-		method: 'POST',
-	}).then(response => response.json())
+const create = data => {
+  return fetch("/.netlify/functions/todos-create", {
+    body: JSON.stringify(data),
+    method: "POST"
+  }).then(response => {
+    return response.json();
+  });
+};
 
-const readAll = () => fetch('/.netlify/functions/todos-read-all').then(response => response.json())
+const createSite = data => {
+  return fetch("/.netlify/functions/site-create", {
+    body: JSON.stringify(data),
+    method: "POST"
+  }).then(response => {
+    return response.json();
+  });
+};
 
-const lighthouse = () => fetch('/.netlify/functions/lighthouse').then(response => response.json())
+const readAll = () => {
+  return fetch("/.netlify/functions/todos-read-all").then(response => {
+    return response.json();
+  });
+};
 
-const update = (todoId, data) =>
-	fetch(`/.netlify/functions/todos-update/${todoId}`, {
-		body: JSON.stringify(data),
-		method: 'POST',
-	}).then(response => response.json())
+const update = (todoId, data) => {
+  return fetch(`/.netlify/functions/todos-update/${todoId}`, {
+    body: JSON.stringify(data),
+    method: "POST"
+  }).then(response => {
+    return response.json();
+  });
+};
 
-const deleteTodo = todoId =>
-	fetch(`/.netlify/functions/todos-delete/${todoId}`, {
-		method: 'POST',
-	}).then(response => response.json())
+const deleteTodo = todoId => {
+  return fetch(`/.netlify/functions/todos-delete/${todoId}`, {
+    method: "POST"
+  }).then(response => {
+    return response.json();
+  });
+};
+
+const batchDeleteTodo = todoIds => {
+  return fetch(`/.netlify/functions/todos-delete-batch`, {
+    body: JSON.stringify({
+      ids: todoIds
+    }),
+    method: "POST"
+  }).then(response => {
+    return response.json();
+  });
+};
 
 const batchDeleteTodo = todoIds =>
 	fetch(`/.netlify/functions/todos-delete-batch`, {
@@ -30,10 +61,10 @@ const batchDeleteTodo = todoIds =>
 	}).then(response => response.json())
 
 export default {
-	create,
-	readAll,
-	update,
-	delete: deleteTodo,
-	batchDelete: batchDeleteTodo,
-	lighthouse,
-}
+  create: create,
+  createSite: createSite,
+  readAll: readAll,
+  update: update,
+  delete: deleteTodo,
+  batchDelete: batchDeleteTodo
+};
