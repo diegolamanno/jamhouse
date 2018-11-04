@@ -352,6 +352,9 @@ export default class Index extends Component {
 					handleModalClose={this.closeModal}
 					handleClearCompleted={this.clearCompleted}
 				/>
+				<button className="todo-create-button" onClick={api.lighthouse}>
+					lighthouse
+				</button>
 			</div>
 		)
 	}

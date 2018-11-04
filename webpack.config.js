@@ -6,4 +6,8 @@ module.exports = {
 	node: {
 		__dirname: true,
 	},
+	externals: {
+		'@serverless-chrome/lambda': '@serverless-chrome/lambda',
+		lighthouse: 'lighthouse',
+	},
 }
