@@ -1,5 +1,4 @@
 /* Api methods to call /functions */
-
 const create = data =>
 	fetch('/.netlify/functions/todos-create', {
 		body: JSON.stringify(data),
@@ -25,41 +24,27 @@ const deleteTodo = todoId =>
 		method: 'POST',
 	}).then(response => response.json())
 
-const lighthouse = async url => {
-	try {
-		const res = await fetch(
-			'https://ey918zoh98.execute-api.us-east-1.amazonaws.com/dev/lighthouse',
-			{
-				method: 'POST',
-				body: JSON.stringify({
-					website: url,
-				}),
-				headers: new Headers({
-					'Content-Type': 'application/json',
-				}),
-			}
-		)
-
-		console.log(res)
-	} catch (err) {
-		console.log(err)
-	}
-}
-
-const batchDeleteTodo = todoIds =>
+const batchDeleteTodo = todoIds => {
 	fetch(`/.netlify/functions/todos-delete-batch`, {
 		body: JSON.stringify({
 			ids: todoIds,
 		}),
 		method: 'POST',
 	}).then(response => response.json())
+}
+
+const readAllSites = () => {
+	return fetch('/.netlify/functions/sites-read-all').then(response => {
+		return response.json()
+	})
+}
 
 export default {
 	create,
 	createSite,
 	readAll,
 	update,
-	lighthouse,
+	readAllSites,
 	delete: deleteTodo,
 	batchDelete: batchDeleteTodo,
 }
