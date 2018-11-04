@@ -27,11 +27,15 @@
 		"checkForFaunaKey": "node ./scripts/check-for-fauna-key.js",
 		"start": "FAUNADB_SERVER_SECRET=fnAC-8O6xYAGAn3sEN0hVlDycvJV4dmWHaQd4f6N npm-run-all --parallel checkForFaunaKey start:app start:server",
 		"start:server": "netlify-lambda serve functions -c ./webpack.config.js",
-		"prebuild": "echo 'setup faunaDB' && npm run bootstrap",
+		"prebuild": "echo 'setup faunaDB' && npm run bootstrap && npm run prebuild-zip",
 		"build": "npm-run-all --parallel build:**",
 		"build:app": "gatsby build",
 		"build:functions": "netlify-lambda build functions -c ./webpack.config.js",
-		"test": "react-scripts test --env=jsdom"
+		"test": "react-scripts test --env=jsdom",
+		"clean": "rm -rf functions-build && mkdir functions-build",
+		"zip": "cd functions/lighthouse && yarn install && zip -r lighthouse.zip *",
+		"postzip": "mv functions/lighthouse/lighthouse.zip functions-build",
+		"prebuild-zip": "npm run clean && npm run zip"
 	},
 	"devDependencies": {
 		"eslint": "^5.3.0",
