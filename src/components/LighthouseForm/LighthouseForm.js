@@ -411,34 +411,34 @@ export default class LighthouseForm extends Component {
 	render() {
 		const { error, isLoading, lighthouseResults } = this.state
 		return (
-			<div className="app">
-				<div className="todo-list">
-					<h2>
-						Check your score
-						<SettingsIcon onClick={this.openModal} className="mobile-toggle" />
-					</h2>
-					<form className="todo-create-wrapper" onSubmit={this.handleLightHouse}>
-						<input
-							className="todo-create-input"
-							placeholder="Website URL"
-							name="name"
-							ref={el => (this.inputElement = el)}
-							autoComplete="off"
-							style={{ marginRight: 20 }}
-						/>
-						<div className="todo-actions">
-							<button className="todo-create-button">Inspect</button>
-							<SettingsIcon onClick={this.openModal} className="desktop-toggle" />
-						</div>
-					</form>
-					{isLoading && (
-						<span>
-							<Loader />
-						</span>
-					)}
-					{lighthouseResults.length > 0 && this.showLighthouseResults(lighthouseResults)}
-					{error && <div style={{ margin: '40px' }}>{error}</div>}
-				</div>
+			<div>
+				<h3>
+					Check your score right now...
+					{/* <SettingsIcon onClick={this.openModal} className="mobile-toggle" /> */}
+				</h3>
+				<form onSubmit={this.handleLightHouse}>
+					<input
+						className="todo-create-input"
+						placeholder="Website URL"
+						name="name"
+						ref={el => (this.inputElement = el)}
+						autoComplete="off"
+						style={{ marginRight: 20 }}
+					/>
+					<p>
+						<button>
+							<i class="fas fa-search" /> Inspect
+						</button>
+						<SettingsIcon onClick={this.openModal} className="desktop-toggle" />
+					</p>
+				</form>
+				{isLoading && (
+					<span>
+						<Loader />
+					</span>
+				)}
+				{lighthouseResults.length > 0 && this.showLighthouseResults(lighthouseResults)}
+				{error && <div style={{ margin: '40px' }}>{error}</div>}
 			</div>
 		)
 	}
