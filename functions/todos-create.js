@@ -2,9 +2,7 @@ import faunadb from "faunadb"; /* Import faunaDB sdk */
 
 /* configure faunaDB Client with our secret */
 const q = faunadb.query;
-const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SERVER_SECRET
-});
+const client = new faunadb.Client({ secret: process.env.FAUNADB_SERVER_SECRET });
 
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
@@ -15,6 +13,7 @@ exports.handler = (event, context, callback) => {
     data: data
   };
   console.log(process.env.FAUNADB_SERVER_SECRET);
+
   /* construct the fauna query */
   return client
     .query(q.Create(q.Ref("classes/todos"), todoItem))
@@ -33,5 +32,6 @@ exports.handler = (event, context, callback) => {
         statusCode: 400,
         body: JSON.stringify(error)
       });
-    });
-};
+    }); // END Return
+
+}; // END Handler
