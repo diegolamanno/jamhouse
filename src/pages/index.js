@@ -97,6 +97,28 @@ export default class Index extends Component {
 			})
 	}
 
+	handleLightHouse = e => {
+		e.preventDefault()
+		const inputValue = this.inputElement.value
+
+		if (!inputValue) {
+			alert('Please add Todo title')
+			this.inputElement.focus()
+			return false
+		}
+
+		// reset input to empty
+		this.inputElement.value = ''
+
+		const websiteInfo = {
+			website: inputValue,
+		}
+
+		console.log(websiteInfo)
+		// Make API request to create new todo
+		this.getLighthouseReport(websiteInfo)
+	}
+
 	deleteTodo = e => {
 		const { todos } = this.state
 		const todoId = e.target.dataset.id
@@ -396,27 +418,36 @@ export default class Index extends Component {
 
 	render() {
 		const { error, isLoading, lighthouseResults } = this.state
-
 		return (
-			<div
-				style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}
-				className="app"
-			>
-				<button
-					style={{ marginTop: '40px' }}
-					className="todo-create-button"
-					type="submit"
-					onClick={() => this.getLighthouseReport('https://www.github.com')}
-				>
-					Get lighthouse results
-				</button>
-				{isLoading && (
-					<span>
-						<Loader />
-					</span>
-				)}
-				{lighthouseResults.length > 0 && this.showLighthouseResults(lighthouseResults)}
-				{error && <div style={{ margin: '40px' }}>{error}</div>}
+			<div className="app">
+				<AppHeader />
+				<div className="todo-list">
+					<h2>
+						Create todo
+						<SettingsIcon onClick={this.openModal} className="mobile-toggle" />
+					</h2>
+					<form className="todo-create-wrapper" onSubmit={this.handleLightHouse}>
+						<input
+							className="todo-create-input"
+							placeholder="Website URL"
+							name="name"
+							ref={el => (this.inputElement = el)}
+							autoComplete="off"
+							style={{ marginRight: 20 }}
+						/>
+						<div className="todo-actions">
+							<button className="todo-create-button">Inspect</button>
+							<SettingsIcon onClick={this.openModal} className="desktop-toggle" />
+						</div>
+					</form>
+					{isLoading && (
+						<span>
+							<Loader />
+						</span>
+					)}
+					{lighthouseResults.length > 0 && this.showLighthouseResults(lighthouseResults)}
+					{error && <div style={{ margin: '40px' }}>{error}</div>}
+				</div>
 			</div>
 		)
 	}

@@ -3,6 +3,8 @@ const launchChrome = require('@serverless-chrome/lambda')
 const lighthouse = require('lighthouse')
 /* export our lambda function as named "handler" export */
 exports.handler = async (event, context, callback) => {
+	console.log('lighthouse kicked in')
+	const data = JSON.parse(event.body)
 	const chrome = await launchChrome({
 		flags: ['--window-size=1280,1696', '--hide-scrollbars'],
 	})
@@ -12,7 +14,7 @@ exports.handler = async (event, context, callback) => {
 		port: chrome.port,
 	}
 
-	const lighthouseResp = await lighthouse('https://github.com', opts, null)
+	const lighthouseResp = await lighthouse(data.url, opts, null)
 
 	await chrome.kill()
 	return {

@@ -14,8 +14,15 @@ const createSite = data =>
 
 const readAll = () => fetch('/.netlify/functions/todos-read-all').then(response => response.json())
 
-const update = (todoId, data) =>
-	fetch(`/.netlify/functions/todos-update/${todoId}`, {
+const lighthouse = data => {
+	return fetch('/.netlify/functions/lighthouse', {
+		body: JSON.stringify(data),
+		method: 'POST',
+	}).then(response => response.json())
+}
+
+const update = (todoId, data) => {
+	return fetch(`/.netlify/functions/todos-update/${todoId}`, {
 		body: JSON.stringify(data),
 		method: 'POST',
 	}).then(response => response.json())
@@ -62,4 +69,5 @@ export default {
 	lighthouse,
 	delete: deleteTodo,
 	batchDelete: batchDeleteTodo,
+	lighthouse,
 }
