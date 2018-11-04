@@ -21,7 +21,7 @@ const AppHome = () => (
 				<div id="check-site" className="shadow">
 					<LighthouseForm />
 					<h3>Check your site right now...</h3>
-					<p className="field">
+					{/* <p className="field">
 						<label htmlFor="name">Name:</label> <input id="name" />
 					</p>
 					<p className="field">
@@ -32,7 +32,7 @@ const AppHome = () => (
 					</p>
 					<p>
 						<button type="submit">Submit</button>
-					</p>
+					</p> */}
 				</div>
 				<div id="web-hook" className="shadow">
 					<h3>...or use our webhook!</h3>
