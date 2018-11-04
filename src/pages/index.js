@@ -110,13 +110,9 @@ export default class Index extends Component {
 		// reset input to empty
 		this.inputElement.value = ''
 
-		const websiteInfo = {
-			website: inputValue,
-		}
-
-		console.log(websiteInfo)
+		console.log(inputValue)
 		// Make API request to create new todo
-		this.getLighthouseReport(websiteInfo)
+		this.getLighthouseReport(inputValue)
 	}
 
 	deleteTodo = e => {
