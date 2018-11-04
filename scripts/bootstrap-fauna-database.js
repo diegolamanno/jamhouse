@@ -51,7 +51,70 @@ function createFaunaDB(key) {
 				name: 'sites',
 			})
 		)
-		.then(ret => console.log(ret))
+		.then(() =>
+			client.query(
+				q.Do(
+					q.CreateClass({
+						name: 'builds',
+						permissions: {
+							create: q.Class('sites'),
+						},
+					}),
+					q.CreateClass({
+						name: 'metrics',
+						permissions: {
+							create: q.Class('builds'),
+						},
+					})
+				)
+			)
+		)
+		.then(() =>
+			client.query(
+				q.Do(
+					q.CreateIndex({
+						name: `all_sites`,
+						source: q.Class('sites'),
+					}),
+					q.CreateIndex({
+						name: `all_metrics`,
+						source: q.Class('metrics'),
+						permissions: {
+							read: q.Class('sites'),
+						},
+					}),
+					q.CreateIndex({
+						name: 'UNIQUE_ENTRY_CONSTRAINT',
+						// @ts-ignore
+						source: q.Class('sites'),
+						terms: [
+							{
+								field: ['data', 'clientID'],
+							},
+						],
+						values: [
+							{
+								field: ['data', 'timestamp'],
+							},
+							{
+								field: ['data', 'performance'],
+							},
+							{
+								field: ['data', 'performance1'],
+							},
+							{
+								field: ['data', 'performance2'],
+							},
+							{
+								field: ['data', 'performance3'],
+							},
+						],
+						unique: true,
+					})
+				)
+			)
+		)
+		.then(console.log.bind(console))
 		.catch(e => {
 			// Database already exists
 			if (e.requestResult.statusCode === 400 && e.message === 'instance not unique') {
@@ -61,81 +124,81 @@ function createFaunaDB(key) {
 		})
 }
 
-function createIndex(client, rev) {
-	console.log(`creating index. reverse_order:${rev}`)
-	if (!rev) {
-		return client
-			.query(
-				q.CreateIndex({
-					name: 'UNIQUE_ENTRY_CONSTRAINT',
-					// @ts-ignore
-					source: Class('sites'),
-					terms: [
-						{
-							field: ['data', 'clientID'],
-						},
-					],
-					values: [
-						{
-							field: ['data', 'timestamp'],
-						},
-						{
-							field: ['data', 'performance'],
-						},
-						{
-							field: ['data', 'performance1'],
-						},
-						{
-							field: ['data', 'performance2'],
-						},
-						{
-							field: ['data', 'performance3'],
-						},
-					],
-					unique: true,
-				})
-			)
-			.then(ret => console.log(`Created index with rev: ${rev}`, ret))
-	} else if (rev) {
-		return client
-			.query(
-				q.CreateIndex({
-					name: 'site_client_id',
-					// @ts-ignore
-					source: Class('sites'),
-					terms: [
-						{
-							field: ['data', 'clientID'],
-						},
-					],
-					values: [
-						{
-							field: ['data', 'timestamp'],
-							reverse: true,
-						},
-						{
-							field: ['data', 'performance'],
-						},
-						{
-							field: ['data', 'performance1'],
-						},
-						{
-							field: ['data', 'performance2'],
-						},
-						{
-							field: ['data', 'performance3'],
-						},
-						{
-							field: ['ref'],
-						},
-					],
-					unique: false,
-					serialized: true,
-				})
-			)
-			.then(ret => console.log(`created index with rev: ${rev} `, ret))
-	}
-}
+// function createIndex(client, rev) {
+// 	console.log(`creating index. reverse_order:${rev}`)
+// 	if (!rev) {
+// 		return client
+// 			.query(
+// 				q.CreateIndex({
+// 					name: 'UNIQUE_ENTRY_CONSTRAINT',
+// 					// @ts-ignore
+// 					source: Class('sites'),
+// 					terms: [
+// 						{
+// 							field: ['data', 'clientID'],
+// 						},
+// 					],
+// 					values: [
+// 						{
+// 							field: ['data', 'timestamp'],
+// 						},
+// 						{
+// 							field: ['data', 'performance'],
+// 						},
+// 						{
+// 							field: ['data', 'performance1'],
+// 						},
+// 						{
+// 							field: ['data', 'performance2'],
+// 						},
+// 						{
+// 							field: ['data', 'performance3'],
+// 						},
+// 					],
+// 					unique: true,
+// 				})
+// 			)
+// 			.then(ret => console.log(`Created index with rev: ${rev}`, ret))
+// 	} else if (rev) {
+// 		return client
+// 			.query(
+// 				q.CreateIndex({
+// 					name: 'site_client_id',
+// 					// @ts-ignore
+// 					source: Class('sites'),
+// 					terms: [
+// 						{
+// 							field: ['data', 'clientID'],
+// 						},
+// 					],
+// 					values: [
+// 						{
+// 							field: ['data', 'timestamp'],
+// 							reverse: true,
+// 						},
+// 						{
+// 							field: ['data', 'performance'],
+// 						},
+// 						{
+// 							field: ['data', 'performance1'],
+// 						},
+// 						{
+// 							field: ['data', 'performance2'],
+// 						},
+// 						{
+// 							field: ['data', 'performance3'],
+// 						},
+// 						{
+// 							field: ['ref'],
+// 						},
+// 					],
+// 					unique: false,
+// 					serialized: true,
+// 				})
+// 			)
+// 			.then(ret => console.log(`created index with rev: ${rev} `, ret))
+// 	}
+// }
 
 /* util methods */
 

@@ -21,7 +21,7 @@ export default class Index extends Component {
 
 	componentDidMount() {
 		// Fetch all todos
-		api.readAll().then(todos => {
+		api.readAllSites().then(todos => {
 			if (todos.message === 'unauthorized') {
 				if (isLocalHost()) {
 					alert(

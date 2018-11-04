@@ -33,11 +33,18 @@ const batchDeleteTodo = todoIds => {
 	}).then(response => response.json())
 }
 
+const readAllSites = () => {
+	return fetch('/.netlify/functions/sites-read-all').then(response => {
+		return response.json()
+	})
+}
+
 export default {
 	create,
 	createSite,
 	readAll,
 	update,
+	readAllSites,
 	delete: deleteTodo,
 	batchDelete: batchDeleteTodo,
 }
