@@ -20,8 +20,8 @@ const AppHome = () => (
 			<div id="getting-started-grid">
 				<div id="check-site" className="shadow">
 					<LighthouseForm />
-					<h3>Check your site right now...</h3>
-					{/* <p className="field">
+					{/* <h3>Check your site right now...</h3>
+					<p className="field">
 						<label htmlFor="name">Name:</label> <input id="name" />
 					</p>
 					<p className="field">
