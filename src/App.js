@@ -10,7 +10,7 @@ import './App.css'
 
 export default class App extends Component {
 	state = {
-		todos: [],
+		sites: [],
 		showMenu: false,
 	}
 
@@ -37,7 +37,7 @@ export default class App extends Component {
 		})
 	}
 
-	siteCreate = e => {
+	createSite = e => {
 		e.preventDefault()
 		api
 			.createSite({
@@ -52,7 +52,7 @@ export default class App extends Component {
 			})
 	}
 
-	saveTodo = e => {
+	saveSite = e => {
 		e.preventDefault()
 		const { todos } = this.state
 		const todoValue = this.inputElement.value

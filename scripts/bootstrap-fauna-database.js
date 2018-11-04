@@ -15,12 +15,12 @@ if (!process.env.FAUNADB_SERVER_SECRET) {
 // @ts-ignore
 console.log(chalk.cyan("Creating your FaunaDB Database...\n"));
 if (insideNetlify) {
-	// Run idempotent database creation
+  // Run idempotent database creation
 
-	console.log(process.env)
-	createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then(() => {
-		console.log('Database created')
-	})
+  console.log(process.env)
+  createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then(() => {
+    console.log('Database created')
+  })
 } else {
   console.log();
   console.log("You can create fauna DB keys here: https://dashboard.fauna.com/db/keys");
@@ -34,10 +34,8 @@ if (insideNetlify) {
       console.log("Please supply a faunaDB server key");
       process.exit(1);
     }
-    createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then((client) =>
-    {
-      createIndex(client, false)
-      createIndex(client, true)
+    createFaunaDB(process.env.FAUNADB_SERVER_SECRET).then((client) => {
+      createIndex(client)
       console.log("Database index created");
     });
   });
@@ -51,119 +49,110 @@ function createFaunaDB(key) {
     secret: key
   });
 
-	/* Based on your requirements, change the schema here */
-	return client
-		.query(
-			q.CreateClass({
-				name: 'sites',
-			})
-		)
-		.then(ret => console.log(ret))
-		.catch(e => {
-			// Database already exists
-			if (e.requestResult.statusCode === 400 && e.message === 'instance not unique') {
-				console.log('DB already exists')
-				throw e
-			}
-		})
+  /* Based on your requirements, change the schema here */
+  return client
+    .query(
+      q.CreateClass({
+        name: 'sites',
+      })
+    )
+    .then(ret => console.log(ret))
+    .catch(e => {
+      // Database already exists
+      if (e.requestResult.statusCode === 400 && e.message === 'instance not unique') {
+        console.log('DB already exists')
+        throw e
+      }
+    })
 }
 
-function createIndex(client, rev) {
-  console.log(`creating index. reverse_order:${rev}`)
-  if (!rev) {
-    return client.query(
-        q.CreateIndex({
-          name: "UNIQUE_ENTRY_CONSTRAINT",
-          // @ts-ignore
-          source: Class("sites"),
-          terms: [{
-            field: ["data", "clientID"]
-          }],
-          values: [{
-              field: ["data", "clientTS"]
-            },
-            {
-              field: ["data", "Performance"]
-            },
-            {
-              field: ["data", "Progressive Web App"]
-            },
-            {
-              field: ["data", "Accessibility"]
-            },
-            {
-              field: ["data", "Best Practices"]
-            },
-            {
-              field: ["data", "SEO"]
-            }
-          ],
-          unique: true
-        })
-      )
-      .then((ret) => console.log(`Created index with rev: ${rev}`, ret))
-  }
-  else if (rev)
-  {
-    return client.query(
-        q.CreateIndex({
-          name: "site_client_id",
-          // @ts-ignore
-          source: Class("sites"),
-          terms: [{
-            field: ["data", "clientID"]
-          }],
-        values:
-          [
-            {
-              field: ["data", "clientTS"],
-              reverse: true
-            },
-            {
-              field: ["data", "Performance"]
-            },
-            {
-              field: ["data", "Progressive Web App"]
-            },
-            {
-              field: ["data", "Accessibility"]
-            },
-            {
-              field: ["data", "Best Practices"]
-            },
-            {
-              field: ["data", "SEO"]
-            },
-            {
-              field:["ref"]
-            }
-          ],
-          unique: false,
-          serialized: true
-        })
-      )
-      .then((ret) => console.log(`created index with rev: ${ rev} `, ret))
-  }
+function createIndex(client) {
+  console.log('creating index: natural order')
+  return client.query(
+      q.CreateIndex({
+        name: "UNIQUE_ENTRY_CONSTRAINT",
+        // @ts-ignore
+        source: Class("sites"),
+        terms: [{
+          field: ["data", "clientID"]
+        }],
+        values: [{
+            field: ["data", "clientTS"]
+          },
+          {
+            field: ["data", "Performance"]
+          },
+          {
+            field: ["data", "Progressive Web App"]
+          },
+          {
+            field: ["data", "Accessibility"]
+          },
+          {
+            field: ["data", "Best Practices"]
+          },
+          {
+            field: ["data", "SEO"]
+          }
+        ],
+        unique: true
+      })
+    )
+    .then(client.query(
+      q.CreateIndex({
+        name: "site_client_id",
+        // @ts-ignore
+        source: Class("sites"),
+        terms: [{
+          field: ["data", "clientID"]
+        }],
+        values: [{
+            field: ["data", "clientTS"],
+            reverse: true
+          },
+          {
+            field: ["data", "Performance"]
+          },
+          {
+            field: ["data", "Progressive Web App"]
+          },
+          {
+            field: ["data", "Accessibility"]
+          },
+          {
+            field: ["data", "Best Practices"]
+          },
+          {
+            field: ["data", "SEO"]
+          },
+          {
+            field: ["ref"]
+          }
+        ],
+        unique: false,
+        serialized: true
+      })
+    )).then((ret) => console.log('created index in reverse order', ret))
 }
 
 /* util methods */
 
 // Test if inside netlify build context
 function insideNetlifyBuildContext() {
-	if (process.env.DEPLOY_PRIME_URL) {
-		return true
-	}
-	return false
+  if (process.env.DEPLOY_PRIME_URL) {
+    return true
+  }
+  return false
 }
 
 // Readline util
 function ask(question, callback) {
-	const rl = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout,
-	})
-	rl.question(question + '\n', function(answer) {
-		rl.close()
-		callback(null, answer)
-	})
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+  rl.question(question + '\n', function (answer) {
+    rl.close()
+    callback(null, answer)
+  })
 }

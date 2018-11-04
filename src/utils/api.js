@@ -1,15 +1,6 @@
 /* Api methods to call /functions */
 
-// const create = data => {
-// 	return fetch('/.netlify/functions/todos-create', {
-// 		body: JSON.stringify(data),
-// 		method: 'POST',
-// 	}).then(response => {
-// 		return response.json()
-// 	})
-// }
-
-const createSite = data => {
+const create = data => {
 	return fetch('/.netlify/functions/site-create', {
 		body: JSON.stringify(data),
 		method: 'POST',
@@ -54,7 +45,6 @@ const batchDeleteTodo = siteIds => {
 
 export default {
 	create: create,
-	createSite: createSite,
 	readAll: readAll,
 	update: update,
 	delete: deleteTodo,
