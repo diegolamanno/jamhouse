@@ -1,16 +1,18 @@
-/* root and responsive stuff */
+/*
+ * ROOT CSS
+ */
 :root {
     --lighthouse-size: 20rem;
     --lighthouse-offset: -10rem;
     --logo-size: 4rem;
-    --page-margin: 3rem;
+    --page-margin: 6rem;
 }
 @media (max-width: 1200px) {
     :root {
         --lighthouse-size: 17.5rem;
         --lighthouse-offset: -8.75rem;
         --logo-size: 3.5rem;
-        --page-margin: 2.5rem;
+        --page-margin: 4rem;
     }    
 }
 @media (max-width: 900px) {
@@ -18,7 +20,7 @@
         --lighthouse-size: 15rem;
         --lighthouse-offset: -7.5rem;
         --logo-size: 3rem;
-        --page-margin: 2rem;
+        --page-margin: 3rem;
     }    
 }
 @media (max-width: 900px) {
@@ -26,7 +28,7 @@
         --lighthouse-size: 12.5rem;
         --lighthouse-offset: -6.25rem;
         --logo-size: 3rem;
-        --page-margin: 1.5rem;
+        --page-margin: 2rem;
     }    
 }
 @media (max-width: 600px) {
@@ -44,8 +46,9 @@ html, body {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cg fill='%23121e61' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 24h4v2H0v-2zm0 4h6v2H0v-2zm0-8h2v2H0v-2zM0 0h4v2H0V0zm0 4h2v2H0V4zm16 20h-6v2h6v-2zm0 4H8v2h8v-2zm0-8h-4v2h4v-2zm0-20h-6v2h6V0zm0 4h-4v2h4V4zm-2 12h2v2h-2v-2zm0-8h2v2h-2V8zM2 8h10v2H2V8zm0 8h10v2H2v-2zm-2-4h14v2H0v-2zm4-8h6v2H4V4zm0 16h6v2H4v-2zM6 0h2v2H6V0zm0 24h2v2H6v-2z'/%3E%3C/g%3E%3C/svg%3E");
 }
     
-    
-/* header */
+/*
+ * HEADER CSS
+ */
 header {
     display: flex;
     flex-direction: column;
@@ -94,7 +97,7 @@ header h1 div {
     color: #ffd54f;
 }
 /*
- * BEGIN MAIN BODY CSS
+ * MAIN BODY CSS
  */
 main {
     background: #c5cae9;
@@ -107,7 +110,7 @@ main, footer {
     top: -1px;
 }
 main section {
-    margin: 2rem -2rem;
+    margin: 3rem -2rem;
     padding: 1rem;
     background: #eee;
     text-align: center;
@@ -149,12 +152,28 @@ main section {
     font-weight: bold;
     padding-top: 1rem;
     color: #00a544;
+    opacity: 0;
+    transition: opacity 1s;
 }
-footer {
-    background: #59DE59;
+#copied.show {
+    opacity: 1;
 }
 
-/* text and field styles */
+/*
+ * FOOTER CSS
+ */
+footer {
+    background: #daffc3;
+    margin: 0 2rem 2.5rem;
+    padding: 2rem 2rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    text-align: center;
+}
+
+/*
+ * TEXT AND INPUT CSS
+ */
 a {
     color: #e64a19;
     text-decoration: none;
@@ -163,6 +182,7 @@ a:hover {
     text-decoration: underline;
 }
 h2, h3, h4, h5, h6 {
+    margin-top: 0.5rem;
     font-weight: unset;
     text-align: center;
     font-family: 'Merriweather', serif;
@@ -173,11 +193,14 @@ p, input, button {
     font-size: 1.1rem;
     margin: 0.5rem;
 }
+p ~ p {
+    margin-top: 1.5rem;
+}
 input {
     box-sizing: border-box;
     padding: 0.5rem;
-    /* height: 2rem; */
     color: #333;
+    border: none;
 }
 #web-hook input {
     width: 100%;
@@ -189,7 +212,7 @@ button {
     color: white;
     width: 8rem;
     font-weight: bold;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     transition: transform 100ms, box-shadow 100ms;
 }
