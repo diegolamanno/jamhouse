@@ -1,0 +1,241 @@
+/*
+ * ROOT CSS
+ */
+:root {
+    --lighthouse-size: 20rem;
+    --lighthouse-offset: -10rem;
+    --logo-size: 4rem;
+    --page-margin: 6rem;
+}
+@media (max-width: 1200px) {
+    :root {
+        --lighthouse-size: 17.5rem;
+        --lighthouse-offset: -8.75rem;
+        --logo-size: 3.5rem;
+        --page-margin: 4rem;
+    }    
+}
+@media (max-width: 900px) {
+    :root {
+        --lighthouse-size: 15rem;
+        --lighthouse-offset: -7.5rem;
+        --logo-size: 3rem;
+        --page-margin: 3rem;
+    }    
+}
+@media (max-width: 900px) {
+    :root {
+        --lighthouse-size: 12.5rem;
+        --lighthouse-offset: -6.25rem;
+        --logo-size: 3rem;
+        --page-margin: 2rem;
+    }    
+}
+@media (max-width: 600px) {
+    :root {
+        --lighthouse-size: 10rem;
+        --lighthouse-offset: -5rem;
+        --logo-size: 2rem;
+        --page-margin: 0;
+    }    
+}
+html, body {
+    margin: 0 var(--page-margin);
+    padding: 0;
+    background-color: #2539ab;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cg fill='%23121e61' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 24h4v2H0v-2zm0 4h6v2H0v-2zm0-8h2v2H0v-2zM0 0h4v2H0V0zm0 4h2v2H0V4zm16 20h-6v2h6v-2zm0 4H8v2h8v-2zm0-8h-4v2h4v-2zm0-20h-6v2h6V0zm0 4h-4v2h4V4zm-2 12h2v2h-2v-2zm0-8h2v2h-2V8zM2 8h10v2H2V8zm0 8h10v2H2v-2zm-2-4h14v2H0v-2zm4-8h6v2H4V4zm0 16h6v2H4v-2zM6 0h2v2H6V0zm0 24h2v2H6v-2z'/%3E%3C/g%3E%3C/svg%3E");
+}
+    
+/*
+ * HEADER CSS
+ */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+header #lighthouse, header h1 div {
+    text-align: center;
+    position: relative;
+    left: var(--lighthouse-offset);
+}
+header #lighthouse #light {
+    position: relative;
+    top: calc((var(--lighthouse-size) / 6.5) + (var(--lighthouse-size) / 8.9));
+    height: calc(var(--lighthouse-size) / 6.5);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 242, 118, 0.75) 15%, rgba(255, 242, 118, 0.9) 50%, rgba(255, 255, 255, 0) 50%);
+    animation: rotate-light 5s linear infinite;
+}
+@keyframes rotate-light {
+    /*left*/  from {transform: perspective(16rem) rotate3d(0, 1, 0, 0deg);} 
+    /*frnt*/  25%  {opacity: 0;}
+    /*rght*/  50%  {opacity: 1;}
+    /*back*/  75%  {opacity: 0  ;}
+    /*left*/  to   {transform: perspective(16rem) rotate3d(0, 1, 0, 360deg);}
+}
+header #lighthouse img {
+    height: var(--lighthouse-size);
+    display: block;
+    margin: 0 auto;
+}
+header h1 {
+    margin: 0;
+    height: 0;
+    background: #59DE59;
+}
+header h1 div {
+    box-sizing: border-box;
+    position: relative;
+    top: calc(var(--logo-size) * (-2));
+    width: 50%;
+    float:right;
+    padding-left: calc(var(--logo-size)*1.5);
+    font-family: 'Averia Serif Libre', cursive;
+    font-weight: normal;
+    font-size: var(--logo-size);
+    text-align: center;
+    color: #ffd54f;
+}
+/*
+ * MAIN BODY CSS
+ */
+main {
+    background: #c5cae9;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+main, footer {
+    /* to fix gap on bottom of lighthouse */
+    position: relative;
+    top: -1px;
+}
+main section {
+    margin: 3rem -2rem;
+    padding: 1rem;
+    background: #eee;
+    text-align: center;
+    line-height: 2.25rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 600px) {
+    main section {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+#getting-started-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.15rem;
+    justify-content: stretch;
+    background: #ccc;
+    margin: 2rem 0;
+}
+#getting-started-grid > * {
+    background: #eee;
+    padding: 0 1rem;
+}
+@media (max-width: 600px) {
+    #getting-started-grid {
+        grid-template-columns: 1fr;
+        grid-gap: 0;
+    }
+    #getting-started-grid > * {
+        padding: 0;
+    }
+}
+#web-hook {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+#copied {
+    font-weight: bold;
+    padding-top: 1rem;
+    color: #00a544;
+    opacity: 0;
+    transition: opacity 1s;
+}
+#copied.show {
+    opacity: 1;
+}
+
+/*
+ * FOOTER CSS
+ */
+footer {
+    background: #daffc3;
+    margin: 0 2rem 2.5rem;
+    padding: 2rem 2rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    text-align: center;
+}
+
+/*
+ * TEXT AND INPUT CSS
+ */
+a {
+    color: #e64a19;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+h2, h3, h4, h5, h6 {
+    margin-top: 0.5rem;
+    font-weight: unset;
+    text-align: center;
+    font-family: 'Merriweather', serif;
+}
+p, input, button {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.75rem;
+    font-size: 1.1rem;
+    margin: 0.5rem;
+}
+p ~ p {
+    margin-top: 1.5rem;
+}
+input {
+    box-sizing: border-box;
+    padding: 0.5rem;
+    color: #333;
+    border: none;
+}
+#web-hook input {
+    width: 100%;
+}
+button {
+    border: none;
+    background: #7a8cf4;
+    padding: 0.5rem;
+    color: white;
+    width: 8rem;
+    font-weight: bold;
+    /* margin-top: 1rem; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: transform 100ms, box-shadow 100ms;
+}
+button:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+.field {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+}
+.field :first-child {
+    display: block;
+    width: 3rem;
+    text-align: right;
+    padding-left: 2rem;
+    /* padding-right: 1rem; */
+}
+.field :last-child {
+    flex: 1;
+    margin: 0 2rem;
+    width: 10rem;
+}

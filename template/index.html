@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Spotlight</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Merriweather|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+        <div id="lighthouse">
+            <div id="light"></div>
+            <img src="assets/lighthouse.svg" alt="Lighthouse with a rotating lightbeam">
+        </div>
+        <h1>
+            <div>Spotlight</div>
+        </h1>
+    </header>
+
+    <main id="front-page">
+        <section>
+            <h2>What is Spotlight?</h2>
+            <p>Spotlight is a tool that leverages the power of <a href="https://developers.google.com/web/tools/lighthouse/"
+                    target="_blank">Google's Lighthouse</a> to automatically audit the quality of your websites,
+                logging changes over time and making it easy to compare your site against others. Give it a try, and if
+                you like it then consider using the web hook to easily include it in your deployment process.</p>
+        </section>
+        <section id="getting-started">
+            <h2>How do I get started?</h2>
+            <div id="getting-started-grid">
+                <div id="check-site" class="shadow">
+                    <h3>Check your site right now...</h3>
+                    <p class="field"><label for="name">Name:</label> <input id="name"></p>
+                    <p class="field"><label for="email">Email:</label> <input id="email"></p>
+                    <p class="field"><label for="site">Site:</label> <input id="site"></p>
+                    <p><button>Submit</button></p>
+                </div>
+                <div id="web-hook" class="shadow">
+                    <h3>...or use our webhook!</h3>
+                    <p><input value="https://ourwebook.com/"></p>
+                    <p><button><i class="fas fa-paste"></i> Copy</button></p>
+                    <!-- <p id="copied"><i class="fas fa-clipboard-check"></i> Copied!</p> -->
+                    <script>
+                        const copyHook = e => {
+                            e.preventDefault();
+                            const message = document.getElementById('copied');
+                            if (e.target.tagName === 'INPUT') {
+                                // Reset the value in case user gave input
+                                e.target.value = 'https://ourwebook.com/';
+                            }
+                            document.querySelector('#web-hook input').select();
+                            document.execCommand("copy");
+                        };
+                        document.querySelector('#web-hook input').addEventListener('click', copyHook);
+                        document.querySelector('#web-hook input').addEventListener('keypress', copyHook);
+                        document.querySelector('#web-hook button').addEventListener('click', copyHook);
+                    </script>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <h2>About the Project</h2>
+        <p>
+            This project was created as part of the 2018 JamStack Hackathon by
+            <a href="https://github.com/acubas">Andres</a>,
+            <a href="https://github.com/camsloanftc">Cam</a>,
+            <a href="https://github.com/DSlatkin" target="_blank">Danny</a>,
+            <a href="https://github.com/camsloanftc" target="_blank">Diego</a>,
+            and
+            <a href="https://github.com/thMthMnky" target="_blank">Henry</a>.
+
+            The lighthouse logo is from <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
+                Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is
+            licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC
+                3.0 BY</a>.
+        </p>
+    </footer>
+</body>
+
+</html>
