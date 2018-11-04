@@ -1,0 +1,183 @@
+/* root and responsive stuff */
+:root {
+    --lighthouse-size: 20rem;
+    --lighthouse-offset: -10rem;
+    --logo-size: 4rem;
+    --page-margin: 3rem;
+}
+@media (max-width: 1200px) {
+    :root {
+        --lighthouse-size: 17.5rem;
+        --lighthouse-offset: -8.75rem;
+        --logo-size: 3.5rem;
+        --page-margin: 2.5rem;
+    }    
+}
+@media (max-width: 900px) {
+    :root {
+        --lighthouse-size: 15rem;
+        --lighthouse-offset: -7.5rem;
+        --logo-size: 3rem;
+        --page-margin: 2rem;
+    }    
+}
+@media (max-width: 900px) {
+    :root {
+        --lighthouse-size: 12.5rem;
+        --lighthouse-offset: -6.25rem;
+        --logo-size: 3rem;
+        --page-margin: 1.5rem;
+    }    
+}
+@media (max-width: 600px) {
+    :root {
+        --lighthouse-size: 10rem;
+        --lighthouse-offset: -5rem;
+        --logo-size: 2rem;
+        --page-margin: 0;
+    }    
+}
+html, body {
+    margin: 0 var(--page-margin);
+    padding: 0;
+    background-color: #2539ab;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cg fill='%23121e61' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M0 24h4v2H0v-2zm0 4h6v2H0v-2zm0-8h2v2H0v-2zM0 0h4v2H0V0zm0 4h2v2H0V4zm16 20h-6v2h6v-2zm0 4H8v2h8v-2zm0-8h-4v2h4v-2zm0-20h-6v2h6V0zm0 4h-4v2h4V4zm-2 12h2v2h-2v-2zm0-8h2v2h-2V8zM2 8h10v2H2V8zm0 8h10v2H2v-2zm-2-4h14v2H0v-2zm4-8h6v2H4V4zm0 16h6v2H4v-2zM6 0h2v2H6V0zm0 24h2v2H6v-2z'/%3E%3C/g%3E%3C/svg%3E");
+}
+    
+    
+/* header */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+header #lighthouse, header h1 div {
+    text-align: center;
+    position: relative;
+    left: var(--lighthouse-offset);
+}
+header #lighthouse #light {
+    position: relative;
+    top: calc((var(--lighthouse-size) / 6.5) + (var(--lighthouse-size) / 8.9));
+    height: calc(var(--lighthouse-size) / 6.5);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 242, 118, 0.75) 15%, rgba(255, 242, 118, 0.9) 50%, rgba(255, 255, 255, 0) 50%);
+    animation: rotate-light 5s linear infinite;
+}
+@keyframes rotate-light {
+    /*left*/  from {transform: perspective(16rem) rotate3d(0, 1, 0, 0deg);} 
+    /*frnt*/  25%  {opacity: 0;}
+    /*rght*/  50%  {opacity: 1;}
+    /*back*/  75%  {opacity: 0  ;}
+    /*left*/  to   {transform: perspective(16rem) rotate3d(0, 1, 0, 360deg);}
+}
+header #lighthouse img {
+    height: var(--lighthouse-size);
+    display: block;
+    margin: 0 auto;
+}
+header h1 {
+    margin: 0;
+    height: 0;
+    background: #59DE59;
+    /* border-radius: 1rem 1rem 0 0; */
+}
+header h1 div {
+    box-sizing: border-box;
+    position: relative;
+    top: calc(var(--logo-size) * (-2));
+    width: 50%;
+    float:right;
+    padding-left: calc(var(--logo-size)*1.5);
+    font-family: 'Averia Serif Libre', cursive;
+    font-weight: normal;
+    font-size: var(--logo-size);
+    text-align: center;
+    color: #ffd54f;
+}
+/*
+ * BEGIN MAIN BODY CSS
+ */
+a {
+    color: #e64a19;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+main {
+    background: #c5cae9;
+    border-radius: 1em;
+    padding: 2rem;
+}
+main, footer {
+    /* to fix gap on bottom of lighthouse */
+    position: relative;
+    top: -1px;
+}
+.shadow {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+h2, h3, h4, h5, h6 {
+    font-weight: unset;
+    text-align: center;
+    /* font-size: 1.4rem; */
+    font-family: 'Merriweather', serif;
+}
+p {
+    font-family: 'Open Sans', sans-serif;
+    /* font-size: 1rem; */
+    line-height: 1.75rem;
+    margin: 0.5rem;
+}
+.field {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.field :first-child {
+    width: 5rem;
+    text-align: right;
+    padding-right: 1rem;
+}
+.field :last-child {
+    flex: 1;
+}
+#intro {
+    margin: 1rem -3rem;
+    padding: 0.5rem 0.5rem;
+    background: #eee;
+    text-align: center;
+    line-height: 2.25rem;
+    font-family: 'Palanquin', sans-serif;
+}
+@media (max-width: 600px) {
+    #intro {
+        margin: 0 -1rem;
+    }
+}
+#intro p {
+    margin: 1rem;
+}
+#getting-started {
+    background: #eee;
+    border-radius: 0;
+    margin: 3rem -3rem;
+    padding: 0.5rem 0.5rem;
+}
+#getting-started h2 {
+    margin: 0;
+    padding: 1rem;
+}
+/* lighter bg color hsla(232, 45%, 93%, 1) */
+#getting-started-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+    justify-content:stretch;
+}
+#check-site, #web-hook {
+    background: white;
+}
+footer {
+    background: #59DE59;
+}
