@@ -1,9 +1,19 @@
-# Project dependencies
+# Build directory
+/public
+.DS_Store
 .cache
+
+# package directories
 node_modules
 yarn-error.log
+jspm_packages
+.serverless
 
 # Build directory
 /public
 .DS_Store
 /functions-build
+
+# Serverless directories
+.serverless
+
