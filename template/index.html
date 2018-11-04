@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,33 @@
     <title>Spotlight</title>
 
     <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Merriweather|Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
     <header>
         <div id="lighthouse">
             <div id="light"></div>
-            <img src="assets/lighthouse.svg" alt="Lighthouse with a rotating lightbeam"></div>
-        <h1><div>Spotlight</div></h1>
+            <img src="assets/lighthouse.svg" alt="Lighthouse with a rotating lightbeam">
+        </div>
+        <h1>
+            <div>Spotlight</div>
+        </h1>
     </header>
 
     <main id="front-page">
-        <section id="intro" class="shadow">
-            <h2>So what is this thing?</h2>
-            <p>Spotlight is a tool that leverages the power of <a href="https://developers.google.com/web/tools/lighthouse/" target="_blank">Google's Lighthouse</a> to automatically audit the quality of your websites, logging changes over time and making it easy to compare your site against others. Give it a try, and if you like it then consider using the web hook to easily include it in your deployment process.</p>
+        <section>
+            <h2>What is Spotlight?</h2>
+            <p>Spotlight is a tool that leverages the power of <a href="https://developers.google.com/web/tools/lighthouse/"
+                    target="_blank">Google's Lighthouse</a> to automatically audit the quality of your websites,
+                logging changes over time and making it easy to compare your site against others. Give it a try, and if
+                you like it then consider using the web hook to easily include it in your deployment process.</p>
         </section>
-        <section id="getting-started" class="shadow">
+        <section id="getting-started">
             <h2>How do I get started?</h2>
             <div id="getting-started-grid">
                 <div id="check-site" class="shadow">
@@ -33,19 +42,25 @@
                     <p class="field"><label for="name">Name:</label> <input id="name"></p>
                     <p class="field"><label for="email">Email:</label> <input id="email"></p>
                     <p class="field"><label for="site">Site:</label> <input id="site"></p>
+                    <p><button>Submit</button></p>
                 </div>
                 <div id="web-hook" class="shadow">
-                    <h3>Use Our Webook</h3>
+                    <h3>Use Our Webhook</h3>
                     <p><input value="https://ourwebook.com/"></p>
-                    <p><button><i class="fas fa-paste"></i> Copy!</button></p>
+                    <p><button><i class="fas fa-paste"></i> Copy</button></p>
+                    <p id="copied"><i class="fas fa-clipboard-check"></i> Copied!</p>
                 </div>
             </div>
         </section>
     </main>
-    <footer> 
+    <footer>
         <ul>
-            <li>Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></li>
+            <li>Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
+                    Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is
+                licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                    target="_blank">CC 3.0 BY</a></li>
         </ul>
     </footer>
 </body>
+
 </html>

@@ -79,7 +79,6 @@ header h1 {
     margin: 0;
     height: 0;
     background: #59DE59;
-    /* border-radius: 1rem 1rem 0 0; */
 }
 header h1 div {
     box-sizing: border-box;
@@ -97,6 +96,65 @@ header h1 div {
 /*
  * BEGIN MAIN BODY CSS
  */
+main {
+    background: #c5cae9;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+main, footer {
+    /* to fix gap on bottom of lighthouse */
+    position: relative;
+    top: -1px;
+}
+main section {
+    margin: 2rem -2rem;
+    padding: 1rem;
+    background: #eee;
+    text-align: center;
+    line-height: 2.25rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 600px) {
+    main section {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+#getting-started-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.15rem;
+    justify-content: stretch;
+    background: #ccc;
+    margin: 2rem 0;
+}
+#getting-started-grid > * {
+    background: #eee;
+    padding: 0 1rem;
+}
+@media (max-width: 600px) {
+    #getting-started-grid {
+        grid-template-columns: 1fr;
+        grid-gap: 0;
+    }
+    #getting-started-grid > * {
+        padding: 0;
+    }
+}
+#web-hook {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+#copied {
+    font-weight: bold;
+    padding-top: 1rem;
+    color: #00a544;
+}
+footer {
+    background: #59DE59;
+}
+
+/* text and field styles */
 a {
     color: #e64a19;
     text-decoration: none;
@@ -104,80 +162,57 @@ a {
 a:hover {
     text-decoration: underline;
 }
-main {
-    background: #c5cae9;
-    border-radius: 1em;
-    padding: 2rem;
-}
-main, footer {
-    /* to fix gap on bottom of lighthouse */
-    position: relative;
-    top: -1px;
-}
-.shadow {
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-}
 h2, h3, h4, h5, h6 {
     font-weight: unset;
     text-align: center;
-    /* font-size: 1.4rem; */
     font-family: 'Merriweather', serif;
 }
-p {
+p, input, button {
     font-family: 'Open Sans', sans-serif;
-    /* font-size: 1rem; */
     line-height: 1.75rem;
+    font-size: 1.1rem;
     margin: 0.5rem;
+}
+input {
+    box-sizing: border-box;
+    padding: 0.5rem;
+    /* height: 2rem; */
+    color: #333;
+}
+#web-hook input {
+    width: 100%;
+}
+button {
+    border: none;
+    background: #7a8cf4;
+    padding: 0.5rem;
+    color: white;
+    width: 8rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: transform 100ms, box-shadow 100ms;
+}
+button:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 .field {
     display: flex;
-    align-items: center;
+    width: 100%;
+    justify-content: space-around;
     flex-direction: row;
+    align-items: center;
 }
 .field :first-child {
-    width: 5rem;
+    display: block;
+    width: 3rem;
     text-align: right;
-    padding-right: 1rem;
+    padding-left: 2rem;
+    /* padding-right: 1rem; */
 }
 .field :last-child {
     flex: 1;
-}
-#intro {
-    margin: 1rem -3rem;
-    padding: 0.5rem 0.5rem;
-    background: #eee;
-    text-align: center;
-    line-height: 2.25rem;
-    font-family: 'Palanquin', sans-serif;
-}
-@media (max-width: 600px) {
-    #intro {
-        margin: 0 -1rem;
-    }
-}
-#intro p {
-    margin: 1rem;
-}
-#getting-started {
-    background: #eee;
-    border-radius: 0;
-    margin: 3rem -3rem;
-    padding: 0.5rem 0.5rem;
-}
-#getting-started h2 {
-    margin: 0;
-    padding: 1rem;
-}
-/* lighter bg color hsla(232, 45%, 93%, 1) */
-#getting-started-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    justify-content:stretch;
-}
-#check-site, #web-hook {
-    background: white;
-}
-footer {
-    background: #59DE59;
+    margin: 0 2rem;
+    width: 10rem;
 }

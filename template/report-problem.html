@@ -30,10 +30,10 @@
         <section id="intro" class="shadow">
             <h2>Report a Problem</h2>
             <form action="https://formspree.io/jamhousejamstack@gmail.com" method="POST">
-                <p><input type="text" name="name"></p>
-                <p><input type="email" name="_replyto"></p>
-                <p><input type="text" name="message"></p>
-                <p><input type="submit" value="Send"></p>
+                <p class="field"><label for="name">Name:</label> <input id="name" type="text" name="name"></p>
+                <p class="field"><label for="email">Email:</label> <input id="email" type="email" name="_replyto"></p>
+                <p class="field"><label for="issue">Issue:</label> <input id="issue" type="text" name="message"></p>
+                <p class="field"><input type="submit" value="Send"></p>
             </form>
         </section>
     </main>
